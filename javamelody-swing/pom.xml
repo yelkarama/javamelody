@@ -51,7 +51,7 @@
 		<dependency>
 			<groupId>org.apache.logging.log4j</groupId>
 			<artifactId>log4j-core</artifactId>
-			<version>2.24.3</version>
+			<version>2.25.2</version>
 		</dependency>
 		<!-- Dépendance iText pour exports PDF -->
 		<dependency>
@@ -156,61 +156,44 @@
 						<phase>package</phase>
 						<configuration>
 							<target>
-								<echo message="Construction du jar" level="info" />
+								<echo message="Construction du jar" level="info"/>
 								<tstamp>
-									<format property="TODAY_FR"
-										pattern="dd MMMM yyyy HH:mm:ss" locale="fr,FR" />
+									<format property="TODAY_FR" pattern="dd MMMM yyyy HH:mm:ss" locale="fr,FR"/>
 								</tstamp>
-								<delete
-									file="target/javamelody-swing-tmp.jar" />
-								<delete
-									file="target/javamelody-swing-${project.version}.jar" />
-								<jar
-									destfile="target/javamelody-swing-tmp.jar">
-									<zipfileset dir="target/classes"
-										excludes="**/Thumbs.db" />
-									<zipfileset file="LICENSE" />
-									<zipfileset
-										src="${project.build.directory}/dependency/javamelody-core-${project.version}.jar"
-										excludes="net/bull/javamelody/Main.class,com/lowagie/text/pdf/fonts/cmap_info.txt" />
-									<zipgroupfileset
-										dir="${project.build.directory}/dependency">
-										<include name="*.jar" />
-										<exclude name="${project.build.directory}/dependency/javamelody-core-${project.version}.jar" />
+								<delete file="target/javamelody-swing-tmp.jar"/>
+								<delete file="target/javamelody-swing-${project.version}.jar"/>
+								<jar destfile="target/javamelody-swing-tmp.jar">
+									<zipfileset dir="target/classes" excludes="**/Thumbs.db"/>
+									<zipfileset file="LICENSE"/>
+									<zipfileset src="${project.build.directory}/dependency/javamelody-core-${project.version}.jar" excludes="net/bull/javamelody/Main.class,com/lowagie/text/pdf/fonts/cmap_info.txt"/>
+									<zipgroupfileset dir="${project.build.directory}/dependency">
+										<include name="*.jar"/>
+										<exclude name="${project.build.directory}/dependency/javamelody-core-${project.version}.jar"/>
 									</zipgroupfileset>
 								</jar>
 								<!-- remove duplicate files for signing to work
 								(META-INF/DEPENDENCIES,META-INF/LICENSE,META-INF/NOTICE)-->
-								<jar
-									destfile="target/javamelody-swing-${project.version}.jar">
-									<zipfileset
-										src="target/javamelody-swing-tmp.jar" />
+								<jar destfile="target/javamelody-swing-${project.version}.jar">
+									<zipfileset src="target/javamelody-swing-tmp.jar"/>
 									<manifest>
-										<attribute name="Built-By" value="${user.name}" />
-										<attribute name="Built-Date" value="${TODAY_FR}" />
-										<attribute name="Build-Jdk" value="${java.version}" />
+										<attribute name="Built-By" value="${user.name}"/>
+										<attribute name="Built-Date" value="${TODAY_FR}"/>
+										<attribute name="Build-Jdk" value="${java.version}"/>
 										<section name="javamelody-swing">
-											<attribute name="Implementation-Title"
-												value="Java Melody Swing" />
-											<attribute name="Implementation-Vendor"
-												value="Emeric Vernat" />
+											<attribute name="Implementation-Title" value="Java Melody Swing"/>
+											<attribute name="Implementation-Vendor" value="Emeric Vernat"/>
 										</section>
 										<!-- attributes related to Java Web Start -->
 										<!-- see http://docs.oracle.com/javase/8/docs/technotes/guides/jweb/security/manifest.html -->
-										<attribute name="Permissions"
-											value="all-permissions" />
-										<attribute name="Codebase" value="*" />
-										<attribute name="Application-Name"
-											value="JavaMelody Desktop" />
-										<attribute name="Trusted-Library" value="true" />
+										<attribute name="Permissions" value="all-permissions"/>
+										<attribute name="Codebase" value="*"/>
+										<attribute name="Application-Name" value="JavaMelody Desktop"/>
+										<attribute name="Trusted-Library" value="true"/>
 									</manifest>
 								</jar>
 
-								<echo message="Signature du jar" level="info" />
-								<signjar
-									jar="target/javamelody-swing-${project.version}.jar"
-									alias="javamelody" keystore="src/main/key/javamelodykeystore"
-									storetype="JKS" storepass="javamelody" />
+								<echo message="Signature du jar" level="info"/>
+								<signjar jar="target/javamelody-swing-${project.version}.jar" alias="javamelody" keystore="src/main/key/javamelodykeystore" storetype="JKS" storepass="javamelody"/>
 							</target>
 						</configuration>
 						<goals>
